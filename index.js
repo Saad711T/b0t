@@ -1,14 +1,26 @@
-// Require the necessary discord.js classes
 const { Client, Intents } = require('discord.js');
 const { token } = require('./config.json');
 
-// Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-
-// When the client is ready, run this code (only once)
-client.on('ready', () => {
-	console.log('the bot is ready!');
+const client = new Client({ 
+    intents: [
+        Intents.FLAGS.GUILDS,        // عشان يتفاعل بالسيرفرات
+        Intents.FLAGS.GUILD_MESSAGES // عشان يقرأ الرسائل
+    ] 
 });
 
-// Login to Discord with your client's token
+client.on('ready', () => {
+    console.log('the bot is ready!');
+});
+
+client.on('messageCreate', message => {
+
+	if (message.author.bot) return;
+
+
+	if (message.content === 'ping') {
+        message.channel.send('pong');
+    }
+});
+
+//bot token
 client.login(token);
